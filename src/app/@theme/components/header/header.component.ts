@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { UserData } from '../../../@core/data/users';
-import { AnalyticsService } from '../../../@core/utils';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'ngx-header',
@@ -15,17 +14,18 @@ export class HeaderComponent implements OnInit {
 
   user: any;
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [{
+    link: '/pages/profile',
+    title: 'Profile',
+  }, {
+    link: '/auth/logout',
+    title: 'Sign Out',
+  }];
 
-  constructor(private sidebarService: NbSidebarService,
+  constructor(public authService: NbAuthService,
               private menuService: NbMenuService,
-              private userService: UserData,
-              private analyticsService: AnalyticsService) {
-  }
-
-  ngOnInit() {
-    this.userService.getUsers()
-      .subscribe((users: any) => this.user = users.nick);
+              private router: Router,
+              private sidebarService: NbSidebarService) {
   }
 
   toggleSidebar(): boolean {
@@ -34,11 +34,21 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
+  ngOnInit() {
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+      if (token.isValid()) {
+        this.user = token.getPayload().user;
+        this.userMenu[0].link = `/pages/profile/${this.user.id}`;
+      }
+    });
+  }
+
   goToHome() {
     this.menuService.navigateHome();
   }
 
-  startSearch() {
-    this.analyticsService.trackEvent('startSearch');
+  goToLogin() {
+    this.router.navigate(['auth/login']);
   }
 }
