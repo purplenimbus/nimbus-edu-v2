@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
+import { StudentsComponent } from './students.component';
 import { ThemeModule } from '../../@theme/theme.module';
-import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
+  declarations: [StudentsComponent],
   imports: [
     ThemeModule,
   ],
-  declarations: [
-    DashboardComponent,
-  ],
 })
-export class DashboardModule { }
+export class StudentsModule { }
