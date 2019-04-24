@@ -15,8 +15,8 @@ export class HeaderComponent implements OnInit {
   user: any;
 
   userMenu = [{
-    link: '/pages/profile',
-    title: 'Profile',
+    link: '/pages/account-settings',
+    title: 'Account Settings',
   }, {
     link: '/auth/logout',
     title: 'Sign Out',
@@ -39,7 +39,6 @@ export class HeaderComponent implements OnInit {
       .subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
         this.user = token.getPayload().user;
-        this.userMenu[0].link = `/pages/profile/${this.user.id}`;
       }
     });
   }
