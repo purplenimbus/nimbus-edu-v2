@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -42,15 +42,62 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
   }
 }
 
+export const APP_LOCAL = window.location.hostname === 'localhost';
+export const HOST =  APP_LOCAL ? 'http://localhost:8000' : 'https://nimbus-edu-v2.herokuapp.com';
+export const BASE_ENDPOINT = `${HOST}/api/v1/`;
+
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
 
     strategies: [
-      NbDummyAuthStrategy.setup({
+      NbPasswordAuthStrategy.setup({
+        baseEndpoint: BASE_ENDPOINT,
+        errors: {
+          key: 'message',
+        },
         name: 'email',
-        delay: 3000,
+        messages: {
+          key: 'data.message',
+        },
+        login: {
+          redirect: {
+            success: '/pages/dashboard',
+          },
+        },
+        logout: {
+          method: 'post',
+          redirect: {
+            success: '/auth/login',
+          },
+        },
+        requestPass: {
+          endpoint: 'password/email',
+          method: 'post',
+          redirect: {
+            success: null,
+          },
+        },
+        resetPass: {
+          endpoint: 'password/reset',
+          method: 'post',
+          redirect: {
+            success: '/auth/login',
+          },
+        },
+        token: {
+          class: NbAuthJWTToken,
+          key: 'token',
+        },
+        validation: {
+          email: {
+            required: true,
+          },
+          password: {
+            required: true,
+          },
+        },
       }),
     ],
     forms: {
