@@ -1,0 +1,76 @@
+<form
+	[formGroup]="userInformationForm"
+	novalidate
+>
+	<div class="">
+		<div class="form-group col-md-12">
+	    <label for="firstName">First name</label>
+	    <input
+	    	[ngClass]="{'form-control-danger' : userInformationForm.controls.firstName.invalid}"
+	    	class="form-control"
+	    	formControlName="firstName"
+	    	placeholder="First Name"
+	    	type="text" />
+	    <div *ngIf="submitted && userInformationForm.controls.firstName.errors" class="invalid-feedback">
+	      <div 
+	      	*ngIf="userInformationForm.controls.firstName.errors.required">
+	      	<small>Title is required</small>
+	      </div>
+	    </div>	
+	  </div>
+	</div>
+	<div class="">
+	  <div class="form-group col-md-12">
+	    <label for="middleName">Middle name</label>
+	    <input
+	    	[ngClass]="{'form-control-danger' : userInformationForm.controls.middleName.invalid}"
+	    	class="form-control"
+	    	formControlName="middleName"
+	    	placeholder="Middle Name"
+	    	type="text" />
+	    <div *ngIf="submitted && userInformationForm.controls.middleName.errors" class="invalid-feedback">
+	      <div 
+	      	*ngIf="userInformationForm.controls.middleName.errors.required">
+	      	<small>Title is required</small>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="">
+	  <div class="form-group col-md-12">
+	    <label for="lastName">Last name</label>
+	    <input
+	    	[ngClass]="{'form-control-danger' : userInformationForm.controls.lastName.invalid}"
+	    	class="form-control"
+	    	formControlName="lastName"
+	    	placeholder="Last Name"
+	    	type="text" />
+	  </div>
+  </div>
+  <div class="">
+	  <div class="form-group col-md-12">
+	    <label for="lastName">Email</label>
+	    <input
+	    	[ngClass]="{'form-control-danger' : userInformationForm.controls.email.invalid}"
+	    	class="form-control"
+	    	formControlName="email"
+	    	placeholder="Email"
+	    	type="email" />
+	  </div>
+  </div>
+  <div class="">
+	  <div class="form-group col-md-12">
+	  	<button
+	  		[nbSpinner]="saving"
+	  		hero
+	  		nbButton
+	  		nbSpinnerMessage="saving profile"
+	  		nbSpinnerStatus="success"
+	  		nbSpinnerSize="large"
+	  		fullWidth
+	  		status="primary"
+	  		disabled="true"
+	  	>Save</button>
+	  </div>
+  </div>
+</form>
