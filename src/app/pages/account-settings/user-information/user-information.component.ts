@@ -11,6 +11,7 @@ export class UserInformationComponent implements OnInit {
 	@Input() user: User;
 
 	saving: boolean = false;
+  title: string = 'Personal Settings';
 	userInformationForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,) { }

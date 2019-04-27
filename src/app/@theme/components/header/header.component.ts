@@ -15,8 +15,8 @@ export class HeaderComponent implements OnInit {
   user: any;
 
   userMenu = [{
-    link: '/pages/account-settings',
-    title: 'Account Settings',
+    link: '/pages/settings/profile',
+    title: 'Settings',
   }, {
     link: '/auth/logout',
     title: 'Sign Out',
