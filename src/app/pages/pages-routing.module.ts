@@ -11,7 +11,7 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'account-settings',
+      path: 'settings/profile',
       component: AccountSettingsComponent,
     },
     {
